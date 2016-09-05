@@ -5,14 +5,19 @@ import akka.testkit.{ImplicitSender, TestKit}
 import com.ted.playground.akka.persistence.fixtures.RestartableActor
 import com.ted.playground.akka.persistence.fixtures.RestartableActor.RestartActor
 import com.ted.playground.akka.persistence.shopping.ShoppingCartActor._
-import org.scalatest.{Matchers, WordSpecLike}
+import org.scalatest.{BeforeAndAfterAll, Matchers, WordSpecLike}
 
 
 class ShoppingCartActorSpec2
   extends TestKit(ActorSystem("ShoppingCartActorSpec2"))
     with WordSpecLike
     with Matchers
+    with BeforeAndAfterAll
     with ImplicitSender {
+
+  override def afterAll: Unit = {
+    TestKit.shutdownActorSystem(system)
+  }
 
   "ShoppingCartActor" should {
     val shoppingItem = ShoppingItem("sku-000001", "Cheap headphones", 42.25, 2)

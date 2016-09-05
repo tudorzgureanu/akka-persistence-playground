@@ -3,13 +3,18 @@ package com.ted.playground.akka.persistence.shopping
 import akka.actor.{ActorSystem, PoisonPill}
 import akka.testkit.{ImplicitSender, TestKit}
 import com.ted.playground.akka.persistence.shopping.ShoppingCartActor._
-import org.scalatest.{Matchers, WordSpecLike}
+import org.scalatest.{BeforeAndAfterAll, Matchers, WordSpecLike}
 
 class ShoppingCartActorSpec
   extends TestKit(ActorSystem("ShoppingCartActorSpec"))
     with WordSpecLike
     with Matchers
+    with BeforeAndAfterAll
     with ImplicitSender {
+
+  override def afterAll: Unit = {
+    TestKit.shutdownActorSystem(system)
+  }
 
   "ShoppingCartActor" should {
     val shoppingItem = ShoppingItem("sku-000001", "Cheap headphones", 42.25, 2)
