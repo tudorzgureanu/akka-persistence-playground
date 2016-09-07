@@ -56,7 +56,7 @@ class ShoppingCartActor(id: String) extends PersistentActor with ActorLogging {
     case RecoveryCompleted => log.info("Recovery completed!")
   }
 
-  private def applyEvent: PartialFunction[ShoppingCartEvent, Seq[ShoppingItem]] = {
+  private def applyEvent(shoppingCartEvent: ShoppingCartEvent): Seq[ShoppingItem] = shoppingCartEvent match {
     case ItemAdded(item) => item +: state
     case ItemUpdated(item) => item +: state.filterNot(_.id == item.id)
     case ItemRemoved(itemId) => state.filterNot(_.id == itemId)

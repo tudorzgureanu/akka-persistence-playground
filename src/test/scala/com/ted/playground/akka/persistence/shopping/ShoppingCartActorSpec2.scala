@@ -49,7 +49,6 @@ class ShoppingCartActorSpec2
       expectMsg(GetItemsResponse(Seq(updatedShoppingItem)))
     }
 
-
     "remove an existing item from the shopping cart and preserve the changes after restart" in {
       val shoppingCartActor = system.actorOf(Props(new ShoppingCartActor("sc-000003") with RestartableActor))
 
